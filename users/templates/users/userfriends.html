@@ -1,0 +1,21 @@
+{% extends "friends/base.html" %}
+
+{% block content %}
+	<div class="row mt-5 ml-4">
+  		<h2 class="col-10">Your Friends <div class="float-right">{{ userfriends.get_friends_no }}</div> </h2>
+
+  	</div>
+	<div class="row p-2">
+		{% for friend in userfriends.get_friends %}
+			<div class="col col-sm-3 frnd m-2">
+				<div class="pic row"><i class="fas fa-user"></i></div>
+				<div class="row mt-5">
+					{{ friend }}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+    	
+  
+{% endblock content %}
+

@@ -1,0 +1,12 @@
+{% extends "friends/base.html" %}
+
+{% block content %}
+  <h1>{{ user.username }}</h1>
+  <h2>Invite Freinds</h2>
+  <ul>
+    {% for item in qs %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+  
+{% endblock content %}

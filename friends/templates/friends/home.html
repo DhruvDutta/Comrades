@@ -1,0 +1,47 @@
+{% extends "friends/base.html" %}
+
+{% block content %}
+    <div class="row mt-5 ml-4">
+        <h2>Explore</h2>
+    	{% if is_empty %}
+      		<h1>No Profiles</h1>
+    	{% endif %}
+  	</div>
+    <div class="row">
+		{% for obj in qs %}
+			<div class="col-12 col-sm-3 m-2 home-card p-3 " >
+				<div class="col-9">
+					{{ obj }}
+				</div>
+				<div class="col-3">
+					{% if obj.user not in rel_receiver and obj.user not in rel_sender %}
+						<form action="{% url 'sendinvite' %}" method="POST">
+							{% csrf_token %}
+							<input type="hidden" name="profile_pk" value={{obj.pk}}>
+
+							<button type="submit" class="btn btn-outline-info"><i class="fas fa-user-plus"></i></button>
+				
+						</form>
+					{% endif %}
+
+
+					{% if obj.user in rel_receiver and request.user not in obj.friends.all %}
+						<button type="submit" class="btn btn-light" disabled><i class="fas fa-user-clock"></i></button>
+					{% endif %}
+					{% if obj.user in rel_sender and request.user not in obj.friends.all %}
+						<button type="submit" class="btn  " disabled><i class="far fa-clock" ></i></button>
+					{% endif %}
+					{% if request.user in obj.friends.all %}
+						<form action="{% url 'removeinvite' %}" method="POST">
+							{% csrf_token %}
+							<input type="hidden" name="profile_pk" value={{obj.pk}}>
+						
+							<button type="submit" class="btn btn-danger "><i class="fas fa-user-minus"></i></button>
+						</form>
+					{% endif %}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+  
+{% endblock content %}

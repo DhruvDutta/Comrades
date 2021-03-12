@@ -1,0 +1,35 @@
+{% extends "friends/base.html" %}
+
+{% block content %}
+	
+	{% if is_empty %}
+		<div class="empty">No Invitations</div>
+	{% else %}
+		<div class="row mt-5 ml-4">
+		<h2>Invites</h2>
+		</div>
+		{% for obj in qs %}
+			
+			<div class="row p-4 invite col-12 col-sm-6 m-2">
+				<div class="col-12 col-sm-8 txt">{{ obj.user }}</div>
+	
+				<form action="{% url 'acceptinvite' %}" method="POST">
+					{% csrf_token %}
+					<input type="hidden" name="profile_pk" value={{obj.pk}}>
+
+					<button type="submit" class="btn btn-info m-2">Accept</button>
+		
+				</form>
+
+				<form action="{% url 'rejectinvite' %}" method="POST">
+					{% csrf_token %}
+					<input type="hidden" name="profile_pk" value="{{ obj.pk }}">
+					<button type="submit" class="btn btn-danger">Reject</button>
+				</form>
+
+			</div>
+		{% endfor %}
+	{% endif %}
+
+
+{% endblock content %}
